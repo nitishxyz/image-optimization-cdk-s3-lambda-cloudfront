@@ -66,12 +66,6 @@ export class S3StackConstruct extends Construct {
       bucketName: `cdk-s3-bucket-storage`,
       enforceSSL: true,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        blockPublicPolicy: false,
-        restrictPublicBuckets: false,
-      }),
       objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "error.html",
@@ -85,35 +79,12 @@ export class S3StackConstruct extends Construct {
             httpErrorCodeReturnedEquals: "403",
           },
         },
-        {
-          hostName: backendURL,
-          httpRedirectCode: "307",
-          protocol: s3.RedirectProtocol.HTTPS,
-          replaceKey: s3.ReplaceKey.prefixWith("prod/?key="),
-          condition: {
-            httpErrorCodeReturnedEquals: "404",
-          },
-        },
       ],
     });
 
     bucket.grantReadWrite(resizerLambda);
     bucket.grantPut(resizerLambda);
     bucket.grantPutAcl(resizerLambda);
-
-    bucket.policy?.document.addStatements(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:*"],
-        resources: [bucket.bucketArn, `${bucket.bucketArn}/*`],
-        principals: [new iam.AnyPrincipal()],
-        conditions: {
-          Bool: {
-            "aws:SecureTransport": "false",
-          },
-        },
-      })
-    );
 
     resizerLambda.addToRolePolicy(
       new iam.PolicyStatement({
@@ -174,6 +145,21 @@ export class S3StackConstruct extends Construct {
             behaviors: [
               {
                 isDefaultBehavior: true,
+              },
+              {
+                pathPattern: "*.jpg",
+                cachedMethods:
+                  cloudfront.CloudFrontAllowedCachedMethods.GET_HEAD,
+              },
+              {
+                pathPattern: "*.jpeg",
+                cachedMethods:
+                  cloudfront.CloudFrontAllowedCachedMethods.GET_HEAD,
+              },
+              {
+                pathPattern: "*.png",
+                cachedMethods:
+                  cloudfront.CloudFrontAllowedCachedMethods.GET_HEAD,
               },
             ],
           },
