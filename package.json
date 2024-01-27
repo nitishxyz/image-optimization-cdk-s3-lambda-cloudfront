@@ -1,6 +1,6 @@
 {
   "name": "image-optimization-cdk-s3-lambda-cloudfront",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "bin": {
     "image-optimization-cdk-s3-lambda-cloudfront": "bin/image-optimization-cdk-s3-lambda-cloudfront.js"
   },
@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy:ci": "rm -rf cdk.out && cdk bootstrap && cdk synth && cdk --app cdk.out deploy --all --require-approval never"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.132",
