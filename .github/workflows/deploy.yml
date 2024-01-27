@@ -3,7 +3,7 @@ name: CDK Deployment
 on:
   push:
     branches:
-      - main
+      - none
 
 jobs:
   deploy:
