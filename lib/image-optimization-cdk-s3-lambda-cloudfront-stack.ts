@@ -6,7 +6,7 @@ import { S3StackConstruct } from "./s3-stack";
 
 const CONTEXT: CDKContext = {
   appName: "ImageOptimizationCdkS3LambdaCloudfront",
-  region: "us-east-1",
+  region: "ap-south-1",
   mediaDomain: "s3-resizer.nitishxyz.dev",
 };
 

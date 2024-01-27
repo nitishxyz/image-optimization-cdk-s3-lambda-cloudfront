@@ -62,8 +62,8 @@ export class S3StackConstruct extends Construct {
     const backendURL = `${apiGateWay.restApiId}.execute-api.${context.region}.amazonaws.com`;
 
     // Create a S3 bucket
-    const bucket = new s3.Bucket(this, `cdk-s3-bucket`, {
-      bucketName: `cdk-s3-bucket`,
+    const bucket = new s3.Bucket(this, `cdk-s3-bucket-storage`, {
+      bucketName: `cdk-s3-bucket-storage`,
       enforceSSL: true,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       blockPublicAccess: new s3.BlockPublicAccess({
