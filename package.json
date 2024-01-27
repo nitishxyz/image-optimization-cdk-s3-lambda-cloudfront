@@ -26,6 +26,9 @@
     "aws-lambda": "1.0.7",
     "aws-sdk": "2.1545.0",
     "constructs": "10.0.0",
+    "file-type": "19.0.0",
+    "mime": "4.0.1",
+    "sharp": "0.33.2",
     "source-map-support": "0.5.21"
   }
 }
